@@ -120,6 +120,10 @@ const getAllMessages=async(req,res)=>{
 const makeMessageWithInaThreadFromAgent=async(req,res)=>{
     const {message,threadId}=req.body;
     try {
+        const thread=await Thread.findById(threadId);
+        if(thread.thread_active===false){
+            return res.status(400).send({success:false,msg:"message can't be sent,since thread is already closed!"})
+        }
         const newMessage=new Message({
             threadId,
             message,
