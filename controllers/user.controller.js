@@ -34,7 +34,7 @@ const register=async(req,res)=>{
             })
          let beware= await user.save()
 
-         res.status(200).send({msg:"User succesfully registered"})
+         res.status(200).send({msg:"User succesfully registered",token:token,name:name,email:email})
         }
           
     } catch (error) {
