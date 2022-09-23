@@ -168,7 +168,7 @@ const makeThreadInactive=async(req,res)=>{
             res.status(400).send({success:false,msg:"No thread exist with this id"})
         }
         else if(thread.agentId==null||thread.agentId==""){
-            res.status(400).send({success:false,msg:"Thread is already in active"})
+            res.status(400).send({success:false,msg:"Thread is not yet assigned to a agent"})
         }
       else {
             // look for another thread for the agent
