@@ -32,7 +32,7 @@ const register=async(req,res)=>{
             })
             const savedAgent= await agent.save();
             
-            const findThread=await Thread.find({thread_active:true,agentId:null||""}).sort({created_at:1}).limit(1)
+            const findThread=await Thread.find({$and:[{thread_active:true},{$or:[{agentId:null},{agentId:null}]}]}).sort({created_at:1}).limit(1)
           console.log(findThread)
             if(findThread.length!=0){
                 const updateThread=await Thread.findByIdAndUpdate(findThread[0].id,{
@@ -74,8 +74,8 @@ const signin=async(req,res)=>{
                 expiresIn:"2h"
             })
 if(result.thread_assigned===false){
-    const findThread=await Thread.find({thread_active:true,agentId:null||""}, { sort: { created_at: 1 }, limit: 1 })
-
+    const findThread=await Thread.find({$and:[{thread_active:true},{$or:[{agentId:null},{agentId:null}]}]}).sort({ created_at: 1 }).limit(1);
+console.log(findThread)
     if(findThread.length!=0){
         const updateThread=await Thread.findByIdAndUpdate(findThread[0].id,{
             agentId:result.id

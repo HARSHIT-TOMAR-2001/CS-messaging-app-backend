@@ -8,7 +8,7 @@ const User = require("../models/user.model");
 const Thread = require("../models/thread.model");
 const Agent = require("../models/agent.model");
 const Message = require("../models/message.model");
-const { update } = require("../models/user.model");
+
 
 const register=async(req,res)=>{
     const {name,email,password}=req.body;
@@ -172,7 +172,7 @@ const makeThreadInactive=async(req,res)=>{
         }
       else {
             // look for another thread for the agent
-            const findThread=await Thread.find({thread_active:true,agentId:null||""}).sort({created_at:1}).limit(1)
+            const findThread=await Thread.find({$and:[{thread_active:true},{$or:[{agentId:null},{agentId:null}]}]}).sort({created_at:1}).limit(1)
 
             if(findThread.length!=0){
                      // updateAgent with new thread if active & unassigned thread exists
